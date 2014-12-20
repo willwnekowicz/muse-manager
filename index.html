@@ -1,237 +1,137 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Spacebrew String</title>
+		<title>Muse Manager</title>
 
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" charset="utf-8" />
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 		<script type="text/javascript" src="js/jq.js"></script>
 		<script type="text/javascript" src="js/sb-1.4.1.js"></script>
-
-		<script type="text/javascript">
-
-			// when window loads call the setup method
-			$(window).on("load", setup);
-
-			// Spacebrew Object
-			var sb
-				, app_name = "Muse Battery Levels"
-				;
-
-			var muses = [1, 2, 3, 4, 5, 6, 7];
-			/**
-			* setup Function that connect to spacebrew and creates a listener for clicks of the submit button.
-			*/
-			function setup (){
-				var random_id = "0000" + Math.floor(Math.random() * 10000)
-					;
-
-				// setup spacebrew
-				sb = new Spacebrew.Client('localhost');  // create spacebrew client object
-
-				sb.name(app_name);
-				sb.description("This app sends text from an HTML form."); // set the app description
-
-		    // create the spacebrew subscription channels
-				muses.forEach(function(muse){
-					sb.addSubscribe("battery-muse-"+muse, "string");		// create the subscription feed
-					sb.addSubscribe("touching-muse-"+muse, "string");		// create the subscription feed
-					sb.addSubscribe("horseshoe-muse-"+muse, "string");		// create the subscription feed
-				})
-
-				// configure the publication and subscription feeds
-				sb.onStringMessage = onStringMessage;
-				sb.onOpen = onOpen;
-
-				// connect to spacbrew
-				sb.connect();
-
-				// listen to button clicks
-				$("#button").on("mousedown", onMouseDown);
-			}
-
-			/**
-			 * Function that is called when Spacebrew connection is established
-			 */
-			function onOpen() {
-				var message = "Connected as <strong>" + sb.name() + "</strong>. ";
-				$("#name").html( message );
-			}
-
-			/**
-			* onMouseDown Function that is called when the submit button is pressed. It reads the
-			*     text in the input box, and then sends it to spacebrew. It accepts a mouse event
-			*     object, though we don't use it in this example.
-			*/
-			function onMouseDown (evt){
-				var newString = $("#string").val();   // load text from input box
-				if (newString !== "") {               // if input box is not blank
-					console.log("Sending message " + newString);
-					sb.send("text", "string", newString);   // send string to spacebrew
-					$("#string").val("");                   // clear the text box
-					$("#status").text(newString); // display the sent message in the browser
-				}
-			}
-
-			/**
-			 * onStringMessage Function that is called whenever new spacebrew string messages are received.
-			 *          It accepts two parameters:
-			 * @param  {String} name    Holds name of the subscription feed channel
-			 * @param  {String} value 	Holds value received from the subscription feed
-			 */
-			function onStringMessage( name, value ){
-				if(name == "battery-muse-1"){ //TODO: Generalize this
-					updateBatteryLevel(name, value);
-				}
-				if(name == "touching-muse-1"){ //TODO: Generalize this
-					updateTouchingForehead(name, value);
-				}
-				if(name == "horseshoe-muse-1"){ //TODO: Generalize this
-					updateHorseshoe(name, value);
-				}
-			}
-
-			function updateBatteryLevel(name, value){
-				$("#"+name).text(value/100 + "%"); // display the sent message in the browser
-				$("#"+name).addClass("flash").delay(400)
-				.queue(function() {
-					$(this).removeClass("flash");
-					$(this).dequeue();
-				});
-			}
-
-			function updateTouchingForehead(name, value){
-				$("#"+name).text(value);
-			}
-
-			function updateHorseshoe(name, value){
-
-				value.forEach(function(key, index){
-					if(key == 1){
-						console.log("Index "+index+": good");
-						$("#"+name+" .sensor-"+index).removeClass("bad").addClass("good");
-					}else{
-						$("#"+name+" .sensor-"+index).removeClass("good").addClass("bad");
-					}
-				});
-
-		}
-
-	    </script>
+		<script type="text/javascript" src="js/setup.js"></script>
+		<script type="text/javascript" src="js/update.js"></script>
+		<script type="text/javascript" src="js/message-router.js"></script>
 	</head>
 
 	<body>
-		<h1>Muse Battery Levels</h1>
+		<header>
+			<h1>Muse Manager</h1>
+			<span class="connection">Trying to connect...</span>
+		</header>
 
-			<h3>
-				<b>Muse 1: </b>
-				<span id="battery-muse-1"></span>
-				<span id="touching-muse-1"></span>
-				<span id="horseshoe-muse-1">
-					<div class="sensor sensor-0"></div>
-					<div class="sensor sensor-1"></div>
-					<div class="sensor sensor-2"></div>
-					<div class="sensor sensor-3"></div>
-				</span>
-
-
-			</h3>
-			<h3><b>Muse 2: </b><span id="battery-muse-2"/></h3>
-			<h3><b>Muse 3: </b><span id="battery-muse-3"/></h3>
-			<h3><b>Muse 4: </b><span id="battery-muse-4"/></h3>
-			<h3><b>Muse 5: </b><span id="battery-muse-5"/></h3>
-			<h3><b>Muse 6: </b><span id="battery-muse-6"/></h3>
-			<h3><b>Muse 7: </b><span id="battery-muse-7"/></h3>
-
-		</br></br>
-
-		<div id="muses">
-			<div class="muse muse-1">
+		<div id="muses" class="wrapper">
+			<div class="muse muse1">
 				<div class="outerContainer">
 					<div class="container">
-						<div class="horse-shoe-gauge"></div>
+						<div class="horseshoe"></div>
 					</div>
 					<div class="bottom left"></div>
 					<div class="bottom right"></div>
-					<div class="sensor TP9"></div>
-					<div class="sensor FP1"></div>
-					<div class="sensor FP2"></div>
-					<div class="sensor TP10"></div>
-					<span class="battery">50%</span>
+					<div class="sensor sensor-1 TP9"></div>
+					<div class="sensor sensor-2 FP1"></div>
+					<div class="sensor sensor-3 FP2"></div>
+					<div class="sensor sensor-4 TP10"></div>
+					<span class="battery">50.00%</span>
 					<span class="muse-number">1</span>
 				</div>
 			</div>
 
-			<div class="muse">
+			<div class="muse muse2">
 				<div class="outerContainer">
 					<div class="container">
-						<div class="horse-shoe-gauge"></div>
+						<div class="horseshoe"></div>
 					</div>
 					<div class="bottom left"></div>
 					<div class="bottom right"></div>
+					<div class="sensor sensor-1 TP9"></div>
+					<div class="sensor sensor-2 FP1"></div>
+					<div class="sensor sensor-3 FP2"></div>
+					<div class="sensor sensor-4 TP10"></div>
+					<span class="battery">50.00%</span>
+					<span class="muse-number">2</span>
 				</div>
 			</div>
 
-			<div class="muse">
+			<div class="muse muse3">
 				<div class="outerContainer">
 					<div class="container">
-						<div class="horse-shoe-gauge"></div>
+						<div class="horseshoe"></div>
 					</div>
 					<div class="bottom left"></div>
 					<div class="bottom right"></div>
+					<div class="sensor sensor-1 TP9"></div>
+					<div class="sensor sensor-2 FP1"></div>
+					<div class="sensor sensor-3 FP2"></div>
+					<div class="sensor sensor-4 TP10"></div>
+					<span class="battery">50.00%</span>
+					<span class="muse-number">3</span>
 				</div>
 			</div>
 
-			<div class="muse">
+			<div class="muse muse4">
 				<div class="outerContainer">
 					<div class="container">
-						<div class="horse-shoe-gauge"></div>
+						<div class="horseshoe"></div>
 					</div>
 					<div class="bottom left"></div>
 					<div class="bottom right"></div>
+					<div class="sensor sensor-1 TP9"></div>
+					<div class="sensor sensor-2 FP1"></div>
+					<div class="sensor sensor-3 FP2"></div>
+					<div class="sensor sensor-4 TP10"></div>
+					<span class="battery">50.00%</span>
+					<span class="muse-number">4</span>
 				</div>
 			</div>
 
-			<div class="muse">
+			<div class="muse muse5">
 				<div class="outerContainer">
 					<div class="container">
-						<div class="horse-shoe-gauge"></div>
+						<div class="horseshoe"></div>
 					</div>
 					<div class="bottom left"></div>
 					<div class="bottom right"></div>
+					<div class="sensor sensor-1 TP9"></div>
+					<div class="sensor sensor-2 FP1"></div>
+					<div class="sensor sensor-3 FP2"></div>
+					<div class="sensor sensor-4 TP10"></div>
+					<span class="battery">50.00%</span>
+					<span class="muse-number">5</span>
 				</div>
 			</div>
 
-			<div class="muse">
+			<div class="muse muse6">
 				<div class="outerContainer">
 					<div class="container">
-						<div class="horse-shoe-gauge"></div>
+						<div class="horseshoe"></div>
 					</div>
 					<div class="bottom left"></div>
 					<div class="bottom right"></div>
+					<div class="sensor sensor-1 TP9"></div>
+					<div class="sensor sensor-2 FP1"></div>
+					<div class="sensor sensor-3 FP2"></div>
+					<div class="sensor sensor-4 TP10"></div>
+					<span class="battery">50.00%</span>
+					<span class="muse-number">6</span>
 				</div>
 			</div>
 
-			<div class="muse">
+			<div class="muse muse7">
 				<div class="outerContainer">
 					<div class="container">
-						<div class="horse-shoe-gauge"></div>
+						<div class="horseshoe"></div>
 					</div>
 					<div class="bottom left"></div>
 					<div class="bottom right"></div>
+					<div class="sensor sensor-1 TP9"></div>
+					<div class="sensor sensor-2 FP1"></div>
+					<div class="sensor sensor-3 FP2"></div>
+					<div class="sensor sensor-4 TP10"></div>
+					<span class="battery">50.00%</span>
+					<span class="muse-number">7</span>
 				</div>
 			</div>
-
-
 		</div>
 
-
-
-
-
-		<div id="name">Trying to connect</div>
-
 	</body>
-
 </html>

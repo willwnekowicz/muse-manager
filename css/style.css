@@ -1,71 +1,33 @@
-body
-{
-			padding: 20px; font: 14px/145% "Helvetica Neue", Helvetica, Arial, Sans-serif;
-			background: rgba(29,149,224,.4);
-			color: white;
+body {
+	font: 14px/145% "Helvetica Neue", Helvetica, Arial, Sans-serif;
+	background: white;
+	color: black;
 }
 a, a:link, a:visited { text-decoration: none; }
-
-.flash{
-	color: #00BB00;
-}
-
-.floatingSquare
-{
-	position:absolute;
-	top:20px;
-	left:20px;
-	color:white;
-	background-color:#333;
-	width:200px;
-	height:20px;
+header{
 	padding:20px;
-	-webkit-box-shadow: 0px 0px 5px #444;
+	background: #333;
 }
-
-.button {
-   background-image: -webkit-linear-gradient(top, rgba(29,149,224,1) 0%,rgba(6,103,164,1) 100%);
-   background-image:    -moz-linear-gradient(top, rgba(29,149,224,1) 0%,rgba(6,103,164,1) 100%);
-   background-image:     -ms-linear-gradient(top, rgba(29,149,224,1) 0%,rgba(6,103,164,1) 100%);
-   background-image:      -o-linear-gradient(top, rgba(29,149,224,1) 0%,rgba(6,103,164,1) 100%);
-   background-image:         linear-gradient(top, rgba(29,149,224,1) 0%,rgba(6,103,164,1) 100%);
-   -webkit-box-shadow: 0px 25px 0px 0px rgba(255,255,255,0.08)inset, 0px 0px 0px 1px rgba(255,255,255,0.3)inset;
-      -moz-box-shadow: 0px 25px 0px 0px rgba(255,255,255,0.08)inset, 0px 0px 0px 1px rgba(255,255,255,0.3)inset;
-           box-shadow: 0px 25px 0px 0px rgba(255,255,255,0.08)inset, 0px 0px 0px 1px rgba(255,255,255,0.3)inset;
-   border: solid 1px rgba(9,81,126,1);
-   -webkit-border-radius: 26px;
-      -moz-border-radius: 26px;
-           border-radius: 26px;
-   width: 220px;
-   display: inline-block;
-   font-size: 21px;
-   line-height: 50px;
-   text-align: center;
-   color: rgba(255,255,255,1);
-   font-weight: bold;
-   text-shadow: 0px -1px 0px rgba(0,0,0,0.66);
-   -webkit-user-select:none;
-   cursor: pointer;
+h1{
+	margin: 0;
+	color: white;
+	font-weight: lighter;
 }
-.button:hover {
-   background-image: -webkit-linear-gradient(top, rgba(43,165,240,1) 0%,rgba(6,103,164,1) 100%);
-   background-image:    -moz-linear-gradient(top, rgba(43,165,240,1) 0%,rgba(6,103,164,1) 100%);
-   background-image:     -ms-linear-gradient(top, rgba(43,165,240,1) 0%,rgba(6,103,164,1) 100%);
-   background-image:      -o-linear-gradient(top, rgba(43,165,240,1) 0%,rgba(6,103,164,1) 100%);
-   background-image:         linear-gradient(top, rgba(43,165,240,1) 0%,rgba(6,103,164,1) 100%);
-}
-.button:active {
-   -webkit-transform: translateY(1px);
-      -moz-transform: translateY(1px);
-           transform: translateY(1px);
-}
-
 span {
 	line-height: 100%;
 	font-weight: lighter;
 }
-
-
+.wrapper{
+	max-width: 960px;
+	margin: 0 auto;
+	padding-top: 40px;
+}
+.connection{
+	position: absolute;
+	top: 29px;
+	right: 20px;
+	color: white;
+}
 
 
 /*=== MUSE CONTAINER ===*/
@@ -83,31 +45,39 @@ span {
 	height: 80px;
 	overflow: hidden;
 }
-.horse-shoe-gauge {
+.horseshoe {
 	width: 100%;
 	height: 132%;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
-	border: 18px solid black;
+	border: 18px solid #eee;
 	box-sizing: border-box;
 }
 .bottom {
 	position: absolute;
-	width: 25px;
+	width: 26px;
 	height: 18px;
 	border-radius: 7px;
-	background: #000;
+	background: #eee;
 }
 .left {
-	bottom: -10px;
+	bottom: -9px;
 	left: 6px;
-	-webkit-transform: rotate(51deg);
+	-webkit-transform: rotate(48deg);
+	-moz-transform: rotate(48deg);
+	-o-transform: rotate(48deg);
+	-ms-transform: rotate(48deg);
+	transform: rotate(48deg);
 }
 .right {
-	bottom: -10px;
-	left: 69px;
-	-webkit-transform: rotate(-51deg);
+	bottom: -9px;
+	left: 68px;
+	-webkit-transform: rotate(-48deg);
+	-moz-transform: rotate(-48deg);
+	-o-transform: rotate(-48deg);
+	-ms-transform: rotate(-48deg);
+	transform: rotate(-48deg);
 }
 
 .sensor{
@@ -116,46 +86,34 @@ span {
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
-	background-color: #DDD;
+	background-color: #eee;
 	position: absolute;
 }
 
-.TP9{
-	left: 4px;
-	top: 62px;
-}
-
-.FP1{
-	left: 11px;
-	top: 16px;
-}
-
-.FP2{
-	left: 73px;
-	top: 16px;
-}
-
-.TP10{
-	left: 81px;
-	top: 62px;
-}
-
-.sensor.good{
-	background: green;
-}
-
-.sensor.bad{
-	background: red;
-}
-
-.battery{
-	position: absolute;
-	top:50px;
-	left:40px;
-}
+.TP9	{left: 4px; top: 62px;}
+.FP1	{left: 11px; top: 16px;}
+.FP2	{left: 73px; top: 16px;}
+.TP10	{left: 81px; top: 62px;}
 
 .muse-number{
 	position: absolute;
 	top:80px;
 	left:46px;
 }
+
+.battery{
+	position: absolute;
+	top:50px;
+	left:30px;
+}
+
+.flash	{color: #00BB00;}
+
+.connected .horseshoe{border: 18px solid #999;}
+.connected .bottom{background: #999;}
+.connected .sensor{background: red;}
+
+.touching .horseshoe{border: 18px solid #87E398;}
+.touching .bottom{background: #87E398;}
+
+.contact{background: green}
