@@ -5,6 +5,7 @@
 * @param  {String} value 	Holds value received from the subscription feed
 */
 function MessageRouter( name, value ){
+  console.log("Message Received");
   var nameArr = name.split("-");
   var path = nameArr[0];
   var museName = nameArr[1];

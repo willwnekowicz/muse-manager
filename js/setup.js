@@ -4,7 +4,7 @@ $(window).on("load", setup);
 // Spacebrew Object
 var sb, app_name = "Muse Manager";
 
-var muses = 7;
+var muses = 21;
 /**
 * Setup Function that connect to spacebrew and creates listeners for Muse data.
 */
