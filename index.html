@@ -36,6 +36,8 @@
 		    // create the spacebrew subscription channels
 				muses.forEach(function(muse){
 					sb.addSubscribe("battery-muse-"+muse, "string");		// create the subscription feed
+					sb.addSubscribe("touching-muse-"+muse, "string");		// create the subscription feed
+					sb.addSubscribe("horseshoe-muse-"+muse, "string");		// create the subscription feed
 				})
 
 				// configure the publication and subscription feeds
@@ -79,13 +81,42 @@
 			 * @param  {String} value 	Holds value received from the subscription feed
 			 */
 			function onStringMessage( name, value ){
+				if(name == "battery-muse-1"){ //TODO: Generalize this
+					updateBatteryLevel(name, value);
+				}
+				if(name == "touching-muse-1"){ //TODO: Generalize this
+					updateTouchingForehead(name, value);
+				}
+				if(name == "horseshoe-muse-1"){ //TODO: Generalize this
+					updateHorseshoe(name, value);
+				}
+			}
+
+			function updateBatteryLevel(name, value){
 				$("#"+name).text(value/100 + "%"); // display the sent message in the browser
 				$("#"+name).addClass("flash").delay(400)
-								.queue(function() {
-									$(this).removeClass("flash");
-									$(this).dequeue();
-								});
+				.queue(function() {
+					$(this).removeClass("flash");
+					$(this).dequeue();
+				});
 			}
+
+			function updateTouchingForehead(name, value){
+				$("#"+name).text(value);
+			}
+
+			function updateHorseshoe(name, value){
+
+				value.forEach(function(key, index){
+					if(key == 1){
+						console.log("Index "+index+": good");
+						$("#"+name+" .sensor-"+index).removeClass("bad").addClass("good");
+					}else{
+						$("#"+name+" .sensor-"+index).removeClass("good").addClass("bad");
+					}
+				});
+
+		}
 
 	    </script>
 	</head>
@@ -93,7 +124,19 @@
 	<body>
 		<h1>Muse Battery Levels</h1>
 
-			<h3><b>Muse 1: </b><span id="battery-muse-1"/></h3>
+			<h3>
+				<b>Muse 1: </b>
+				<span id="battery-muse-1"></span>
+				<span id="touching-muse-1"></span>
+				<span id="horseshoe-muse-1">
+					<div class="sensor sensor-0"></div>
+					<div class="sensor sensor-1"></div>
+					<div class="sensor sensor-2"></div>
+					<div class="sensor sensor-3"></div>
+				</span>
+
+
+			</h3>
 			<h3><b>Muse 2: </b><span id="battery-muse-2"/></h3>
 			<h3><b>Muse 3: </b><span id="battery-muse-3"/></h3>
 			<h3><b>Muse 4: </b><span id="battery-muse-4"/></h3>
@@ -102,6 +145,91 @@
 			<h3><b>Muse 7: </b><span id="battery-muse-7"/></h3>
 
 		</br></br>
+
+		<div id="muses">
+			<div class="muse muse-1">
+				<div class="outerContainer">
+					<div class="container">
+						<div class="horse-shoe-gauge"></div>
+					</div>
+					<div class="bottom left"></div>
+					<div class="bottom right"></div>
+					<div class="sensor TP9"></div>
+					<div class="sensor FP1"></div>
+					<div class="sensor FP2"></div>
+					<div class="sensor TP10"></div>
+					<span class="battery">50%</span>
+					<span class="muse-number">1</span>
+				</div>
+			</div>
+
+			<div class="muse">
+				<div class="outerContainer">
+					<div class="container">
+						<div class="horse-shoe-gauge"></div>
+					</div>
+					<div class="bottom left"></div>
+					<div class="bottom right"></div>
+				</div>
+			</div>
+
+			<div class="muse">
+				<div class="outerContainer">
+					<div class="container">
+						<div class="horse-shoe-gauge"></div>
+					</div>
+					<div class="bottom left"></div>
+					<div class="bottom right"></div>
+				</div>
+			</div>
+
+			<div class="muse">
+				<div class="outerContainer">
+					<div class="container">
+						<div class="horse-shoe-gauge"></div>
+					</div>
+					<div class="bottom left"></div>
+					<div class="bottom right"></div>
+				</div>
+			</div>
+
+			<div class="muse">
+				<div class="outerContainer">
+					<div class="container">
+						<div class="horse-shoe-gauge"></div>
+					</div>
+					<div class="bottom left"></div>
+					<div class="bottom right"></div>
+				</div>
+			</div>
+
+			<div class="muse">
+				<div class="outerContainer">
+					<div class="container">
+						<div class="horse-shoe-gauge"></div>
+					</div>
+					<div class="bottom left"></div>
+					<div class="bottom right"></div>
+				</div>
+			</div>
+
+			<div class="muse">
+				<div class="outerContainer">
+					<div class="container">
+						<div class="horse-shoe-gauge"></div>
+					</div>
+					<div class="bottom left"></div>
+					<div class="bottom right"></div>
+				</div>
+			</div>
+
+
+		</div>
+
+
+
+
+
 		<div id="name">Trying to connect</div>
 
 	</body>
