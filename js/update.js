@@ -3,7 +3,8 @@
 */
 function updateBatteryLevel(museName, value){
   element = $("."+museName+" .battery");
-  $(element).text(value/100 + "%"); // display the battery level
+  value = value.split(",")[0];
+  $(element).text(parseFloat(value)/100 + "%"); // display the battery level
   $(element).addClass("flash").delay(400)
   .queue(function() {
     $(this).removeClass("flash");
@@ -27,8 +28,8 @@ function updateTouchingForehead(museName, value){
 * Function that is called when Horseshoe message is received
 */
 function updateHorseshoe(museName, value){
-  value.forEach(function(key, index){
-    if(key == 1){ //Good Contact
+  value.split(",").forEach(function(key, index){
+    if(parseFloat(key) == 1.0){ //Good Contact
       $("."+museName+" .sensor-"+eval(index+1)).addClass("contact");
     }else{ //Bad or No Contact
       $("."+museName+" .sensor-"+eval(index+1)).removeClass("contact");

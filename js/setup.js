@@ -10,7 +10,7 @@ var muses = 21;
 */
 function setup (){
   // Setup Spacebrew
-  sb = new Spacebrew.Client('localhost');  // create spacebrew client object
+  sb = new Spacebrew.Client('server.neuron.brain');  // create spacebrew client object
 
   sb.name(app_name);
   sb.description("This app monitors Muses for battery level, connection status, and fit.");
