@@ -2,13 +2,14 @@
 $( document ).ready( initMuses );
 
 function initMuses(){
-  for (i = 1; i <= muses; i++) { //Number of muses configured in setup.js
+  for (var i = 1; i <= muses; i++) { //Number of muses configured in setup.js
     $("#muses").append(muse(i));
   }
 }
 
-function muse(museId){
-  return "<div class='muse muse"+museId+"'> \
+function muse(museNumber){
+  var museId = museNumber + parseInt(id_offset);
+  return "<div class='muse muse-"+museId+"'> \
     <div class='outerContainer'> \
       <div class='container'> \
         <div class='horseshoe'></div> \
@@ -20,7 +21,7 @@ function muse(museId){
       <div class='sensor sensor-3 FP2'></div> \
       <div class='sensor sensor-4 TP10'></div> \
       <span class='battery'>0.00%</span> \
-      <span class='muse-number'>"+museId+"</span> \
+      <span class='muse-number'>"+museNumber+"</span> \
     </div> \
   </div>";
 }

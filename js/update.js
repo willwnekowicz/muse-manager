@@ -38,9 +38,23 @@ function updateHorseshoe(museName, value){
 }
 
 /**
-* Function that is called when Spacebrew connection is established
+* Function that shows whether a Muse is sending data
 */
-function onOpen() {
-  var message = "Connected as <strong>" + sb.name() + "</strong>. ";
-  $(".connection").html( message );
+var lastMessage = [];
+function updateConnectionStatus(museName){
+  var museId = museName.split(",")[1];
+  lastMessage[museId] = Date.now();
+
+  if(lastMessage[museId]){
+    //console.log(museId + " is up and running!");
+    $('.'+museId + ' .muse-number').addClass("flash").delay(400)
+    .queue(function() {
+      $(this).removeClass("flash");
+      $(this).dequeue();
+    });
+
+  }else{
+    //console.log(museId + " is offline!")
+  }
+  // console.log(lastMessage);
 }

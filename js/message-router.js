@@ -8,7 +8,9 @@ function MessageRouter( name, value ){
   console.log("Message Received");
   var nameArr = name.split("-");
   var path = nameArr[0];
-  var museName = nameArr[1];
+  var museName = nameArr[1]+"-"+nameArr[2];
+
+  updateConnectionStatus(name);
 
   if(path == "battery"){
     updateBatteryLevel(museName, value);

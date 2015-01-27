@@ -13,6 +13,9 @@ h1{
 	color: white;
 	font-weight: lighter;
 }
+h2{
+	font-weight: lighter;
+}
 span {
 	line-height: 100%;
 	font-weight: lighter;
@@ -33,7 +36,7 @@ span {
 /*=== MUSE CONTAINER ===*/
 
 .muse{
-	margin: 30px 18px;
+	margin: 60px 18px;
 	display: inline-block;
 }
 
@@ -117,3 +120,14 @@ span {
 .touching .bottom{background: #87E398;}
 
 .contact{background: green}
+
+/*=== FOOTER ===*/
+#legend{
+	border-top: 1px solid #ddd;
+	margin-top: 20px;
+}
+#legend img{
+	width: 360px;
+	height:173px;
+	margin:0 auto;
+}
