@@ -11,8 +11,8 @@ var id_offset = 5000;
 */
 function setup (){
   // Setup Spacebrew
-  // sb = new Spacebrew.Client('server.neuron.brain');  // create spacebrew client object
-  sb = new Spacebrew.Client('localhost', {reconnect: true});  // create spacebrew client object
+  sb = new Spacebrew.Client('server.neuron.brain', {reconnect:true});  // create spacebrew client object
+  // sb = new Spacebrew.Client('localhost', {reconnect: true});  // create spacebrew client object
 
   sb.extend(Spacebrew.Admin);
   sb.debug = false;
@@ -90,7 +90,7 @@ function connect_muse(clientName, remoteAddress){
   var metrics = {"batt": "battery", "touching_forehead": "touching", "horseshoe": "horseshoe"};
 
   for(var pub_metric in metrics){
-    sb.addRoute(clientName, remoteAddress, pub_metric, "muse-manager", adminAddress, metrics[pub_metric]+"-"+clientName);
+    sb.addRoute(clientName, remoteAddress, pub_metric, app_name, adminAddress, metrics[pub_metric]+"-"+clientName);
   }
 
 }

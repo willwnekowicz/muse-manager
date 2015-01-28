@@ -42,19 +42,11 @@ function updateHorseshoe(museName, value){
 */
 var lastMessage = [];
 function updateConnectionStatus(museName){
-  var museId = museName.split(",")[1];
-  lastMessage[museId] = Date.now();
-
-  if(lastMessage[museId]){
-    //console.log(museId + " is up and running!");
-    $('.'+museId + ' .muse-number').addClass("flash").delay(400)
-    .queue(function() {
-      $(this).removeClass("flash");
-      $(this).dequeue();
-    });
-
-  }else{
-    //console.log(museId + " is offline!")
-  }
-  // console.log(lastMessage);
+  $("."+museName).addClass("connected");
+  clearTimeout(lastMessage[museName]);
+  lastMessage[museName] = setTimeout(function(){
+    console.log("timeout function called for "+museName);
+    $("."+museName).removeClass("connected touching");
+    $("."+museName + " .sensor").removeClass("contact");
+  }, 1000);
 }
