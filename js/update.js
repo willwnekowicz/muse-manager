@@ -48,5 +48,5 @@ function updateConnectionStatus(museName){
     console.log("timeout function called for "+museName);
     $("."+museName).removeClass("connected touching");
     $("."+museName + " .sensor").removeClass("contact");
-  }, 1000);
+  }, 3000);
 }
